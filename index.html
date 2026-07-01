@@ -641,6 +641,12 @@ function startStepTimer(id) {
     renderStepTimers(); // Anzeige live aktualisieren
   }, 1000);
   renderStepTimers();
+  // Wenn kein anderer Schritt vorher lief (erster gestarteter Schritt),
+  // wird die Hauptprozesszeit automatisch gestartet falls sie noch nicht läuft.
+  const anyOtherRunning = stepTimers.some(s => s.id !== id && s.running);
+  if (!anyOtherRunning && !timerRun.proc) {
+    startTimer('proc');
+  }
 }
 
 // ---------------------------------------------------------------------
